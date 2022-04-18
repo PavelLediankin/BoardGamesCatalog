@@ -22,10 +22,30 @@ public class GameInfoService
 
     public void addGame(String name, String description, long producerId, long categoryId)
     {
-        var producer = producersRepository.findById(producerId).get();
-        var category = categoriesRepository.findById(categoryId).get();
+        var producer = producersRepository.getById(producerId);
+        var category = categoriesRepository.getById(categoryId);
         var game = new Game(name, description, producer, category);
         gamesRepository.save(game);
+    }
+
+    public void editGame(long id, Game game)
+    {
+        var oldGame = gamesRepository.getById(id);
+        if(game.getDescription() != null)
+        {
+            oldGame.setDescription(game.getDescription());
+            gamesRepository.save(game);
+        }
+    }
+
+    public Game getGame(long id)
+    {
+        return gamesRepository.getById(id);
+    }
+
+    public void removeGame(long id)
+    {
+        gamesRepository.deleteById(id);
     }
 
     public void addCategory(String categoryName)
@@ -34,9 +54,9 @@ public class GameInfoService
         categoriesRepository.save(category);
     }
 
-    public void removeGame(long id)
+    public GameCategory getCategory(long id)
     {
-        gamesRepository.deleteById(id);
+        return categoriesRepository.getById(id);
     }
 
     public void removeCategory(long id)
