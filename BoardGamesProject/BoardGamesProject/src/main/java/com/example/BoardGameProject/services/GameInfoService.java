@@ -2,6 +2,7 @@ package com.example.BoardGameProject.services;
 
 import com.example.BoardGameProject.models.Game;
 import com.example.BoardGameProject.models.GameCategory;
+import com.example.BoardGameProject.models.Producer;
 import com.example.BoardGameProject.repositories.GameCategoriesRepository;
 import com.example.BoardGameProject.repositories.GamesRepository;
 import com.example.BoardGameProject.repositories.ProducersRepository;
@@ -48,6 +49,7 @@ public class GameInfoService
         gamesRepository.deleteById(id);
     }
 
+
     public void addCategory(String categoryName)
     {
         var category = new GameCategory(categoryName);
@@ -62,5 +64,22 @@ public class GameInfoService
     public void removeCategory(long id)
     {
         categoriesRepository.deleteById(id);
+    }
+
+
+    public void addProducer(String producerName)
+    {
+        var producer = new Producer(producerName);
+        producersRepository.save(producer);
+    }
+
+    public Producer getProducer(long id)
+    {
+        return producersRepository.getById(id);
+    }
+
+    public void removeProducer(long id)
+    {
+        producersRepository.deleteById(id);
     }
 }
