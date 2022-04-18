@@ -35,7 +35,7 @@ public class GameInfoService
         if(game.getDescription() != null)
         {
             oldGame.setDescription(game.getDescription());
-            gamesRepository.save(game);
+            gamesRepository.save(oldGame);
         }
     }
 
