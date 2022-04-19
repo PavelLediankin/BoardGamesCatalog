@@ -23,11 +23,8 @@ public class GameInfoService
     @Autowired
     GameCategoriesRepository categoriesRepository;
 
-    public void addGame(String name, String description, long producerId, long categoryId)
+    public void addGame(Game game)
     {
-        var producer = producersRepository.getById(producerId);
-        var category = categoriesRepository.getById(categoryId);
-        var game = new Game(name, description, producer, category);
         gamesRepository.save(game);
     }
 
@@ -57,9 +54,8 @@ public class GameInfoService
     }
 
 
-    public void addCategory(String categoryName)
+    public void addCategory(GameCategory category)
     {
-        var category = new GameCategory(categoryName);
         categoriesRepository.save(category);
     }
 
@@ -79,15 +75,19 @@ public class GameInfoService
     }
 
 
-    public void addProducer(String producerName)
+    public void addProducer(Producer producer)
     {
-        var producer = new Producer(producerName);
         producersRepository.save(producer);
     }
 
     public Producer getProducer(long id)
     {
         return producersRepository.getById(id);
+    }
+
+    public List<Producer> getProducers()
+    {
+        return producersRepository.findAll();
     }
 
     public void removeProducer(long id)
