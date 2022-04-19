@@ -3,47 +3,65 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.GameCategory;
 import com.example.BoardGameProject.resources.CategoryResource;
 import com.example.BoardGameProject.services.GameInfoService;
-import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController extends CoreController
 {
-/*
-    @Autowired
-    Validator validator;
+    /*
+        @Autowired
+        Validator validator;
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder){
-        binder.addValidators(validator);
-    }
-*/
+        @InitBinder
+        protected void initBinder(WebDataBinder binder){
+            binder.addValidators(validator);
+        }
+    */
+
+    @Autowired
+    GameInfoService gameInfoService;
+
     @GetMapping
     public List<CategoryResource> index()
     {
-        throw new NotYetImplementedException();
+        var list = gameInfoService.getCategories();
+
+        var resources = new ArrayList<CategoryResource>();
+        list.forEach(category -> {
+            var resource = new CategoryResource(category);
+            resource.add(createHateoasLink(category.getId()));
+            resources.add(resource);
+        });
+
+        return resources;
     }
 
     @GetMapping("/{id}")
     public CategoryResource view(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        var category = gameInfoService.getCategory(id);
+
+        var resource = new CategoryResource(category);
+        resource.add(createHateoasLink(category.getId()));
+        return resource;
     }
 
     @PostMapping
     public GameCategory create(@RequestBody GameCategory category)
     {
-        throw new NotYetImplementedException();
+        return gameInfoService.addCategory(category);
     }
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        gameInfoService.removeGames(id);
+        return "OK";
     }
-
 }
 
