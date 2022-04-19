@@ -25,6 +25,17 @@ public class GameStoreService
         return storesRepository.save(store);
     }
 
+    public Store editStore(long id, Store store)
+    {
+        var oldStore = storesRepository.getById(id);
+        if (store.getStoreName() != null)
+        {
+            oldStore.setStoreName(store.getAddress());
+            return storesRepository.save(oldStore);
+        }
+        return oldStore;
+    }
+
     public Store getStore(long id)
     {
         return storesRepository.getById(id);
@@ -45,7 +56,7 @@ public class GameStoreService
     {
         return addGamesInStore(gameId, storeId, count, -1);
     }
-
+    
     public GamesInStore removeGamesInStore(long gameId, long storeId, int count) throws Exception
     {
         return removeGamesInStore(gameId, storeId, count, -1);
@@ -75,7 +86,8 @@ public class GameStoreService
     }
 
     @Transactional
-    private GamesInStore changeGamesCountInStore(boolean addGames, long gameId, long storeId, int count, float price) throws Exception
+    private GamesInStore changeGamesCountInStore(boolean addGames, long gameId, long storeId, int count, float price)
+            throws Exception
     {
         var game = gamesRepository.findById(gameId).get();
         var store = storesRepository.findById(storeId).get();
@@ -84,18 +96,18 @@ public class GameStoreService
         var stored = games.getOrDefault(game, null);
         if (stored == null)
         {
-            if(!addGames)
+            if (!addGames)
                 throw new Exception("No games in that store");
-            if(price < 0)
+            if (price < 0)
                 price = 0;
-            store.addGame(game,count,price);
+            store.addGame(game, count, price);
             stored = games.get(game);
         }
         else
         {
-            if(price < 0)
+            if (price < 0)
                 price = stored.getPrice();
-            if(addGames)
+            if (addGames)
                 stored.addCount(count);
             else
                 stored.removeCount(count);
