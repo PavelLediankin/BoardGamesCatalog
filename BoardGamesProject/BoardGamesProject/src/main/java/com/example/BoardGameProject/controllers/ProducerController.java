@@ -2,44 +2,65 @@ package com.example.BoardGameProject.controllers;
 
 import com.example.BoardGameProject.models.Producer;
 import com.example.BoardGameProject.resources.ProducerResource;
+import com.example.BoardGameProject.services.GameInfoService;
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/producer")
 public class ProducerController extends CoreController
 {
-/*
-    @Autowired
-    Validator validator;
+    /*
+        @Autowired
+        Validator validator;
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder){
-        binder.addValidators(validator);
-    }
-*/
+        @InitBinder
+        protected void initBinder(WebDataBinder binder){
+            binder.addValidators(validator);
+        }
+    */
+    @Autowired
+    GameInfoService gameInfoService;
 
     @GetMapping
     public List<ProducerResource> index()
     {
-        throw new NotYetImplementedException();
+        var list = gameInfoService.getProducers();
+
+        var resources = new ArrayList<ProducerResource>();
+        list.forEach(producer -> {
+            var resource = new ProducerResource(producer);
+            resource.add(createHateoasLink(producer.getId()));
+            resources.add(resource);
+        });
+
+        return resources;
     }
 
     @GetMapping("/{id}")
     public ProducerResource view(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        var producer = gameInfoService.getProducer(id);
+
+        var resource = new ProducerResource(producer);
+        resource.add(createHateoasLink(producer.getId()));
+        return resource;
     }
 
     @PostMapping
     public Producer create(@RequestBody @Valid Producer producer)
     {
-        throw new NotYetImplementedException();
+        return gameInfoService.addProducer(producer);
     }
 
+    /**
+     * This method NOT used now, but it is saved in case of changing in producer editing
+     */
     @PostMapping(value = "/{id}")
     public Producer edit(@PathVariable("id") long id, @RequestBody @Valid Producer producer)
     {
@@ -49,7 +70,8 @@ public class ProducerController extends CoreController
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        gameInfoService.removeProducer(id);
+        return "OK";
     }
 }
 
