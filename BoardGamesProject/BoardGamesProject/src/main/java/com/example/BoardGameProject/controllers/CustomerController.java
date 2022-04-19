@@ -2,52 +2,71 @@ package com.example.BoardGameProject.controllers;
 
 import com.example.BoardGameProject.models.Customer;
 import com.example.BoardGameProject.resources.CustomerResource;
-import org.hibernate.cfg.NotYetImplementedException;
+import com.example.BoardGameProject.services.CustomersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController extends CoreController
 {
-/*
-    @Autowired
-    Validator validator;
+    /*
+        @Autowired
+        Validator validator;
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder){
-        binder.addValidators(validator);
-    }
-*/
+        @InitBinder
+        protected void initBinder(WebDataBinder binder){
+            binder.addValidators(validator);
+        }
+    */
+    @Autowired
+    CustomersService customersService;
+
     @GetMapping
     public List<CustomerResource> index()
     {
-        throw new NotYetImplementedException();
+        var list = customersService.getCustomers();
+
+        var resources = new ArrayList<CustomerResource>();
+        list.forEach(customer -> {
+            var resource = new CustomerResource(customer);
+            resource.add(createHateoasLink(customer.getId()));
+            resources.add(resource);
+        });
+
+        return resources;
     }
 
     @GetMapping("/{id}")
     public CustomerResource view(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        var customer = customersService.getCustomer(id);
+
+        var resource = new CustomerResource(customer);
+        resource.add(createHateoasLink(customer.getId()));
+        return resource;
     }
 
     @PostMapping
     public Customer create(@RequestBody Customer customer)
     {
-        throw new NotYetImplementedException();
+        return customersService.addCustomer(customer);
     }
 
     @PostMapping("/{id}")
     public Customer edit(@PathVariable("id") long id, @RequestBody Customer customer)
     {
-        throw new NotYetImplementedException();
+        return customersService.editCustomer(id, customer);
     }
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        customersService.removeCustomer(id);
+        return "OK";
     }
 }
 
