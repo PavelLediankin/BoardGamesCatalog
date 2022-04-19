@@ -20,9 +20,9 @@ public class GameStoreService
     @Autowired
     StoresRepository storesRepository;
 
-    public void addStore(Store store)
+    public Store addStore(Store store)
     {
-        storesRepository.save(store);
+        return storesRepository.save(store);
     }
 
     public Store getStore(long id)
@@ -41,24 +41,24 @@ public class GameStoreService
     }
 
 
-    public void addGamesInStore(long gameId, long storeId, int count) throws Exception
+    public GamesInStore addGamesInStore(long gameId, long storeId, int count) throws Exception
     {
-        addGamesInStore(gameId, storeId, count, -1);
+        return addGamesInStore(gameId, storeId, count, -1);
     }
 
-    public void removeGamesInStore(long gameId, long storeId, int count) throws Exception
+    public GamesInStore removeGamesInStore(long gameId, long storeId, int count) throws Exception
     {
-        removeGamesInStore(gameId, storeId, count, -1);
+        return removeGamesInStore(gameId, storeId, count, -1);
     }
 
-    public void addGamesInStore(long gameId, long storeId, int count, float price) throws Exception
+    public GamesInStore addGamesInStore(long gameId, long storeId, int count, float price) throws Exception
     {
-        changeGamesCountInStore(true, gameId, storeId, count, price);
+        return changeGamesCountInStore(true, gameId, storeId, count, price);
     }
 
-    public void removeGamesInStore(long gameId, long storeId, int count, float price) throws Exception
+    public GamesInStore removeGamesInStore(long gameId, long storeId, int count, float price) throws Exception
     {
-        changeGamesCountInStore(false, gameId, storeId, count, price);
+        return changeGamesCountInStore(false, gameId, storeId, count, price);
     }
 
     public GamesInStore getGamesInStore(long storeId, long gameId)
@@ -75,7 +75,7 @@ public class GameStoreService
     }
 
     @Transactional
-    private void changeGamesCountInStore(boolean addGames, long gameId, long storeId, int count, float price) throws Exception
+    private GamesInStore changeGamesCountInStore(boolean addGames, long gameId, long storeId, int count, float price) throws Exception
     {
         var game = gamesRepository.findById(gameId).get();
         var store = storesRepository.findById(storeId).get();
@@ -89,6 +89,7 @@ public class GameStoreService
             if(price < 0)
                 price = 0;
             store.addGame(game,count,price);
+            stored = games.get(game);
         }
         else
         {
@@ -101,5 +102,6 @@ public class GameStoreService
             stored.setPrice(price);
         }
         storesRepository.save(store);
+        return stored;
     }
 }
