@@ -20,9 +20,8 @@ public class GameStoreService
     @Autowired
     StoresRepository storesRepository;
 
-    public void addStore(String storeName, String address)
+    public void addStore(Store store)
     {
-        var store = new Store(storeName, address);
         storesRepository.save(store);
     }
 

@@ -16,9 +16,8 @@ public class CustomersService
     @Autowired
     GameStoreService gameStoreService;
 
-    public void addCustomer(String firstName, String lastName, String address)
+    public void addCustomer(Customer customer)
     {
-        var customer = new Customer(firstName, lastName, address);
         customersRepository.save(customer);
     }
 
