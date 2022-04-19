@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class GameStoreService
@@ -28,6 +29,11 @@ public class GameStoreService
     public Store getStore(long id)
     {
         return storesRepository.getById(id);
+    }
+
+    public List<Store> getStores()
+    {
+        return storesRepository.findAll();
     }
 
     public void removeStore(long id)

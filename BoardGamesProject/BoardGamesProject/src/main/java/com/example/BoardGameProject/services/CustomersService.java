@@ -5,6 +5,8 @@ import com.example.BoardGameProject.repositories.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomersService
 {
@@ -33,6 +35,11 @@ public class CustomersService
     public Customer getCustomer(long id)
     {
         return customersRepository.getById(id);
+    }
+
+    public List<Customer> getCustomers()
+    {
+        return customersRepository.findAll();
     }
 
     public void removeCustomer(long id)
