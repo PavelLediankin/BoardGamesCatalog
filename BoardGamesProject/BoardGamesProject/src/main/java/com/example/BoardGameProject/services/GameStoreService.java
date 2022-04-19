@@ -41,6 +41,11 @@ public class GameStoreService
         addGamesInStore(gameId, storeId, count, -1);
     }
 
+    public void removeGamesInStore(long gameId, long storeId, int count) throws Exception
+    {
+        removeGamesInStore(gameId, storeId, count, -1);
+    }
+
     public void addGamesInStore(long gameId, long storeId, int count, float price) throws Exception
     {
         changeGamesCountInStore(true, gameId, storeId, count, price);
