@@ -9,6 +9,8 @@ import com.example.BoardGameProject.repositories.ProducersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameInfoService
 {
@@ -44,7 +46,12 @@ public class GameInfoService
         return gamesRepository.getById(id);
     }
 
-    public void removeGame(long id)
+    public List<Game> getGames()
+    {
+        return gamesRepository.findAll();
+    }
+
+    public void removeGames(long id)
     {
         gamesRepository.deleteById(id);
     }
@@ -59,6 +66,11 @@ public class GameInfoService
     public GameCategory getCategory(long id)
     {
         return categoriesRepository.getById(id);
+    }
+
+    public List<GameCategory> getCategories()
+    {
+        return categoriesRepository.findAll();
     }
 
     public void removeCategory(long id)
