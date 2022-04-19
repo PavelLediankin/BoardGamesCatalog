@@ -3,10 +3,10 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.Game;
 import com.example.BoardGameProject.resources.GameResource;
 import com.example.BoardGameProject.services.GameInfoService;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,34 +24,49 @@ public class GameController extends CoreController
         binder.addValidators(validator);
     }
 */
+
     @GetMapping
     public List<GameResource> index()
     {
-        throw new NotYetImplementedException();
+        var list = gameInfoService.getGames();
+
+        var resources = new ArrayList<GameResource>();
+        list.forEach(game -> {
+            var resource = new GameResource(game);
+            resource.add(createHateoasLink(game.getId()));
+            resources.add(resource);
+        });
+
+        return resources;
     }
 
     @GetMapping("/{id}")
     public GameResource view(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        var game = gameInfoService.getGame(id);
+
+        var resource = new GameResource(game);
+        resource.add(createHateoasLink(game.getId()));
+        return resource;
     }
 
     @PostMapping
     public Game create(@RequestBody Game game)
     {
-        throw new NotYetImplementedException();
+        return gameInfoService.addGame(game);
     }
 
     @PostMapping("/{id}")
     public Game edit(@PathVariable("id") long id, @RequestBody Game game)
     {
-        throw new NotYetImplementedException();
+        return gameInfoService.editGame(id, game);
     }
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id)
     {
-        throw new NotYetImplementedException();
+        gameInfoService.removeGames(id);
+        return "Ok";
     }
 }
 

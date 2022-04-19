@@ -23,19 +23,20 @@ public class GameInfoService
     @Autowired
     GameCategoriesRepository categoriesRepository;
 
-    public void addGame(Game game)
+    public Game addGame(Game game)
     {
-        gamesRepository.save(game);
+        return gamesRepository.save(game);
     }
 
-    public void editGame(long id, Game game)
+    public Game editGame(long id, Game game)
     {
         var oldGame = gamesRepository.getById(id);
         if(game.getDescription() != null)
         {
             oldGame.setDescription(game.getDescription());
-            gamesRepository.save(oldGame);
+            return gamesRepository.save(oldGame);
         }
+        return oldGame;
     }
 
     public Game getGame(long id)
@@ -54,9 +55,9 @@ public class GameInfoService
     }
 
 
-    public void addCategory(GameCategory category)
+    public GameCategory addCategory(GameCategory category)
     {
-        categoriesRepository.save(category);
+        return categoriesRepository.save(category);
     }
 
     public GameCategory getCategory(long id)
@@ -75,9 +76,9 @@ public class GameInfoService
     }
 
 
-    public void addProducer(Producer producer)
+    public Producer addProducer(Producer producer)
     {
-        producersRepository.save(producer);
+        return producersRepository.save(producer);
     }
 
     public Producer getProducer(long id)

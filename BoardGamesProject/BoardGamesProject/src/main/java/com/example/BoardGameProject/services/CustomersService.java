@@ -16,19 +16,21 @@ public class CustomersService
     @Autowired
     GameStoreService gameStoreService;
 
-    public void addCustomer(Customer customer)
+    public Customer addCustomer(Customer customer)
     {
-        customersRepository.save(customer);
+        return customersRepository.save(customer);
+
     }
 
-    public void editCustomer(long id, Customer customer)
+    public Customer editCustomer(long id, Customer customer)
     {
         var oldCustomer = customersRepository.getById(id);
         if(customer.getAddress() != null)
         {
             oldCustomer.setAddress(customer.getAddress());
-            customersRepository.save(oldCustomer);
+            return customersRepository.save(oldCustomer);
         }
+        return oldCustomer;
     }
 
     public Customer getCustomer(long id)
