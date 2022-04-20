@@ -14,7 +14,7 @@ public class GameCategory
     @Column
     private final String category;
 
-    @OneToMany(mappedBy = "game_categories")
+    @OneToMany(mappedBy = "category")
     private List<Game> games;
 
     public GameCategory(String category)
