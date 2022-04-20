@@ -3,11 +3,11 @@ package com.example.BoardGameProject.resources;
 import com.example.BoardGameProject.models.Game;
 import com.example.BoardGameProject.models.Producer;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
-public class ProducerResource extends ResourceSupport
+public class ProducerResource extends RepresentationModel<ProducerResource>
 {
     @JsonProperty
     public long id;
