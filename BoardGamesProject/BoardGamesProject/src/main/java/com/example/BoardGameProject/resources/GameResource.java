@@ -5,9 +5,9 @@ import com.example.BoardGameProject.models.GameCategory;
 import com.example.BoardGameProject.models.Producer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class GameResource extends ResourceSupport
+public class GameResource extends RepresentationModel<GameResource>
 {
     @JsonProperty
     public long id;

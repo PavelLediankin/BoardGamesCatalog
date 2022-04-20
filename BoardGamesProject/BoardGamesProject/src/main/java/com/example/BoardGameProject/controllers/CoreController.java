@@ -2,7 +2,7 @@ package com.example.BoardGameProject.controllers;
 
 import org.springframework.hateoas.Link;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 
 public class CoreController

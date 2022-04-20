@@ -2,9 +2,9 @@ package com.example.BoardGameProject.resources;
 
 import com.example.BoardGameProject.models.Customer;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class CustomerResource extends ResourceSupport
+public class CustomerResource extends RepresentationModel<CustomerResource>
 {
     @JsonProperty
     public long id;
