@@ -3,9 +3,12 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.Customer;
 import com.example.BoardGameProject.resources.CustomerResource;
 import com.example.BoardGameProject.services.CustomersService;
+import com.example.BoardGameProject.validators.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +16,17 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController extends CoreController
 {
-    /*
-        @Autowired
-        Validator validator;
-
-        @InitBinder
-        protected void initBinder(WebDataBinder binder){
-            binder.addValidators(validator);
-        }
-    */
     @Autowired
     CustomersService customersService;
+
+    @Autowired
+    CustomerValidator validator;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder)
+    {
+        binder.addValidators(validator);
+    }
 
     @GetMapping
     public List<CustomerResource> index()
@@ -51,13 +54,13 @@ public class CustomerController extends CoreController
     }
 
     @PostMapping
-    public Customer create(@RequestBody Customer customer)
+    public Customer create(@RequestBody @Valid Customer customer)
     {
         return customersService.addCustomer(customer);
     }
 
     @PostMapping("/{id}")
-    public Customer edit(@PathVariable("id") long id, @RequestBody Customer customer)
+    public Customer edit(@PathVariable("id") long id, @RequestBody @Valid Customer customer)
     {
         return customersService.editCustomer(id, customer);
     }
