@@ -1,13 +1,16 @@
 package com.example.BoardGameProject.controllers;
 
-import com.example.BoardGameProject.RequestBodies.GhangeGamesCountInStore;
+import com.example.BoardGameProject.RequestBodies.ChangeGamesCountInStore;
 import com.example.BoardGameProject.models.GamesInStore;
 import com.example.BoardGameProject.models.Store;
 import com.example.BoardGameProject.resources.StoreResource;
 import com.example.BoardGameProject.services.GameStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +18,18 @@ import java.util.List;
 @RequestMapping("/store")
 public class StoreController extends CoreController
 {
-    /*
-        @Autowired
-        Validator validator;
-
-        @InitBinder
-        protected void initBinder(WebDataBinder binder){
-            binder.addValidators(validator);
-        }
-    */
     @Autowired
     GameStoreService gameStoreService;
+
+    @Autowired
+    Validator validator;
+
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder)
+    {
+        binder.addValidators(validator);
+    }
 
     @GetMapping
     public List<StoreResource> index()
@@ -53,13 +57,13 @@ public class StoreController extends CoreController
     }
 
     @PostMapping
-    public Store create(@RequestBody Store store)
+    public Store create(@RequestBody @Valid Store store)
     {
         return gameStoreService.addStore(store);
     }
 
     @PostMapping("/{id}")
-    public Store edit(@PathVariable("id") long id, @RequestBody Store store)
+    public Store edit(@PathVariable("id") long id, @RequestBody @Valid Store store)
     {
         return gameStoreService.editStore(id, store);
     }
@@ -72,7 +76,7 @@ public class StoreController extends CoreController
     }
 
     @PostMapping("/add-game")
-    public GamesInStore add(@RequestBody GhangeGamesCountInStore requestBody)
+    public GamesInStore add(@RequestBody @Valid ChangeGamesCountInStore requestBody)
     {
         var gameId = requestBody.game.getId();
         var storeId = requestBody.store.getId();
@@ -87,7 +91,7 @@ public class StoreController extends CoreController
     }
 
     @PostMapping("/remove-game")
-    public GamesInStore remove(@RequestBody GhangeGamesCountInStore requestBody)
+    public GamesInStore remove(@RequestBody @Valid ChangeGamesCountInStore requestBody)
     {
         var gameId = requestBody.game.getId();
         var storeId = requestBody.store.getId();

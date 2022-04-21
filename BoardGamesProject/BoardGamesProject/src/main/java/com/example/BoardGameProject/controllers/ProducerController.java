@@ -5,6 +5,8 @@ import com.example.BoardGameProject.resources.ProducerResource;
 import com.example.BoardGameProject.services.GameInfoService;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,17 +17,17 @@ import java.util.List;
 @RequestMapping("/producer")
 public class ProducerController extends CoreController
 {
-    /*
-        @Autowired
-        Validator validator;
-
-        @InitBinder
-        protected void initBinder(WebDataBinder binder){
-            binder.addValidators(validator);
-        }
-    */
     @Autowired
     GameInfoService gameInfoService;
+
+    @Autowired
+    Validator validator;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder)
+    {
+        binder.addValidators(validator);
+    }
 
     @GetMapping
     public List<ProducerResource> index()

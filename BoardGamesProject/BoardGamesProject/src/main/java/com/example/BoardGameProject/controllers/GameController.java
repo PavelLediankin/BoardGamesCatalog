@@ -4,8 +4,11 @@ import com.example.BoardGameProject.models.Game;
 import com.example.BoardGameProject.resources.GameResource;
 import com.example.BoardGameProject.services.GameInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +18,15 @@ public class GameController extends CoreController
 {
     @Autowired
     GameInfoService gameInfoService;
-/*
+
     @Autowired
     Validator validator;
 
     @InitBinder
-    protected void initBinder(WebDataBinder binder){
+    protected void initBinder(WebDataBinder binder)
+    {
         binder.addValidators(validator);
     }
-*/
 
     @GetMapping
     public List<GameResource> index()
@@ -51,13 +54,13 @@ public class GameController extends CoreController
     }
 
     @PostMapping
-    public Game create(@RequestBody Game game)
+    public Game create(@RequestBody @Valid Game game)
     {
         return gameInfoService.addGame(game);
     }
 
     @PostMapping("/{id}")
-    public Game edit(@PathVariable("id") long id, @RequestBody Game game)
+    public Game edit(@PathVariable("id") long id, @RequestBody @Valid Game game)
     {
         return gameInfoService.editGame(id, game);
     }
