@@ -3,8 +3,8 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.GameCategory;
 import com.example.BoardGameProject.resources.CategoryResource;
 import com.example.BoardGameProject.services.GameInfoService;
-import com.example.BoardGameProject.validators.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class CategoryController extends CoreController
     GameInfoService gameInfoService;
 
     @Autowired
-    CategoryValidator validator;
+    Validator validator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder)

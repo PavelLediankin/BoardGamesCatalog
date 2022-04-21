@@ -5,9 +5,8 @@ import com.example.BoardGameProject.models.GamesInStore;
 import com.example.BoardGameProject.models.Store;
 import com.example.BoardGameProject.resources.StoreResource;
 import com.example.BoardGameProject.services.GameStoreService;
-import com.example.BoardGameProject.validators.ChangeGamesCountValidator;
-import com.example.BoardGameProject.validators.StoreValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +22,13 @@ public class StoreController extends CoreController
     GameStoreService gameStoreService;
 
     @Autowired
-    StoreValidator storeValidator;
+    Validator validator;
 
-    @Autowired
-    ChangeGamesCountValidator requestValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder)
     {
-        binder.addValidators(storeValidator, requestValidator);
+        binder.addValidators(validator);
     }
 
     @GetMapping

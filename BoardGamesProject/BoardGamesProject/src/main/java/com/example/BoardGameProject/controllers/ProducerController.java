@@ -3,9 +3,9 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.Producer;
 import com.example.BoardGameProject.resources.ProducerResource;
 import com.example.BoardGameProject.services.GameInfoService;
-import com.example.BoardGameProject.validators.ProducerValidator;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class ProducerController extends CoreController
     GameInfoService gameInfoService;
 
     @Autowired
-    ProducerValidator validator;
+    Validator validator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder)

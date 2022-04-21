@@ -3,8 +3,8 @@ package com.example.BoardGameProject.controllers;
 import com.example.BoardGameProject.models.Game;
 import com.example.BoardGameProject.resources.GameResource;
 import com.example.BoardGameProject.services.GameInfoService;
-import com.example.BoardGameProject.validators.GameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,9 @@ public class GameController extends CoreController
 {
     @Autowired
     GameInfoService gameInfoService;
+
     @Autowired
-    GameValidator validator;
+    Validator validator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder)
