@@ -1,6 +1,6 @@
 package com.example.BoardGameProject.controllers;
 
-import com.example.BoardGameProject.RequestBodies.GhangeGamesCountInStore;
+import com.example.BoardGameProject.RequestBodies.ChangeGamesCountInStore;
 import com.example.BoardGameProject.models.GamesInStore;
 import com.example.BoardGameProject.models.Store;
 import com.example.BoardGameProject.resources.StoreResource;
@@ -72,7 +72,7 @@ public class StoreController extends CoreController
     }
 
     @PostMapping("/add-game")
-    public GamesInStore add(@RequestBody GhangeGamesCountInStore requestBody)
+    public GamesInStore add(@RequestBody ChangeGamesCountInStore requestBody)
     {
         var gameId = requestBody.game.getId();
         var storeId = requestBody.store.getId();
@@ -87,7 +87,7 @@ public class StoreController extends CoreController
     }
 
     @PostMapping("/remove-game")
-    public GamesInStore remove(@RequestBody GhangeGamesCountInStore requestBody)
+    public GamesInStore remove(@RequestBody ChangeGamesCountInStore requestBody)
     {
         var gameId = requestBody.game.getId();
         var storeId = requestBody.store.getId();
